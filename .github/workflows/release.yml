@@ -1,0 +1,42 @@
+name: Release
+# Publishes the fat jar as a downloadable GitHub release when a version tag is pushed:  git tag v0.1.0 && git push origin v0.1.0
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Fetch real-world corpus
+        run: bash scripts/fetch-real-world-corpus.sh
+      - name: Build and test
+        run: ./mvnw -B -ntp verify
+      - name: Smoke test the jar exactly as a user runs it (drop into a folder, run, no arguments)
+        run: |
+          mkdir drop
+          printf 'create or replace procedure b_proc is\nbegin\n  null;\nend;\n/\n' > drop/b_proc.prc
+          printf 'create or replace procedure a_proc is\nbegin\n  b_proc;\nend;\n/\n' > drop/a_proc.prc
+          cp target/plsql-atlas.jar drop/
+          (cd drop && java -jar plsql-atlas.jar --no-ui)
+          test -f drop/.agentdocs/AGENTS.md
+          test -f drop/.agentdocs/analysis/verification.md
+          test -f drop/.agentdocs/analysis/er-diagram.md
+      - name: Checksum
+        run: cd target && sha256sum plsql-atlas.jar > SHA256SUMS
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >
+          gh release create "$GITHUB_REF_NAME"
+          target/plsql-atlas.jar target/SHA256SUMS
+          --title "$GITHUB_REF_NAME" --generate-notes

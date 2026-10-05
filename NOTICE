@@ -1,0 +1,23 @@
+plsql-atlas
+Copyright (c) 2026 Sandeep Ravitej (MIT License, see LICENSE)
+
+This product includes software developed by others. Full license texts are in THIRD_PARTY_LICENSES.txt
+(also inside the jar under META-INF/plsql-atlas/).
+
+- PL/SQL ANTLR4 grammar (src/main/antlr4/.../PlSqlLexer.g4, PlSqlParser.g4) and the helper classes
+  PlSqlLexerBase.java / PlSqlParserBase.java come from the antlr/grammars-v4 project
+  (https://github.com/antlr/grammars-v4/tree/master/sql/plsql), licensed under the Apache License 2.0.
+  Copyright (c) 2009-2011 Alexandre Porcelli; (c) 2015-2019 Ivan Kochurkin (Positive Technologies); (c) 2017-2018 Mark Adams.
+  The grammar's original copyright and license headers are retained in the .g4 files. These files were modified
+  (see "Local modifications" below).
+- ANTLR 4 runtime (BSD-3-Clause), picocli (Apache-2.0), Jackson (Apache-2.0).
+- Explorer UI graph libraries, vendored unmodified in src/main/resources/explorer/vendor (all MIT):
+  Cytoscape.js, cytoscape-fcose, cose-base, layout-base, cytoscape-dagre, dagre.
+- Real-world test corpus (not vendored, not shipped; downloaded by scripts/fetch-real-world-corpus.* for tests only):
+  OraOpenSource/Logger and mortenbra/alexandria-plsql-utils, each under its own license.
+
+Local modifications to third-party grammar files
+- PlSqlParser.g4, rule `regular_id`: added the `FILE_EXT` token as an alternative, because upstream lexes the
+  identifiers FNC/PKB/PKS/PRC/TRG/VW as file extensions and then fails to parse e.g. `create trigger trg ...`
+  or a variable named `vw`. Marked with "LOCAL PATCH" in the grammar.
+- PlSqlParserBase.java / PlSqlLexerBase.java: adapted for this project (statement-terminator handling after PL/SQL units).

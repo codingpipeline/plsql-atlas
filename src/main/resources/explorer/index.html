@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>plsql-atlas</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="top">
+  <div class="brand"><span class="dot"></span>plsql-atlas <small class="by">by Sandeep Ravitej</small> <small id="toolinfo"></small></div>
+  <nav id="views">
+    <button data-view="verdict">Verdict</button>
+    <button data-view="explore" class="on">Explore</button>
+    <button data-view="files">Files</button>
+    <button data-view="er">ER diagram</button>
+    <button data-view="tables">Tables</button>
+    <button data-view="order">Order</button>
+    <button data-view="coverage">Coverage</button>
+    <button data-view="confidence">Confidence</button>
+  </nav>
+  <div id="live" title="Connection to the folder watcher"><span class="pulse"></span><span id="livetext">connecting…</span></div>
+</header>
+
+<main id="explore" class="view on">
+  <aside id="side">
+    <input id="search" type="search" placeholder="Search routines, tables, purpose…" autocomplete="off">
+    <div class="chips" id="kindchips"></div>
+    <div class="chips" id="riskchips"></div>
+    <div id="tree"></div>
+  </aside>
+  <section id="graphwrap">
+    <div id="graphbar">
+      <div class="seg" id="modeseg"><button data-mode="focus" class="on">Focus</button><button data-mode="global">Global</button></div>
+      <label class="depth">depth <select id="depth"><option>1</option><option selected>2</option><option>3</option><option>5</option></select></label>
+      <button id="fit" title="Fit to screen">⤢ fit</button>
+      <button id="expand" title="Graph full-screen">⛶ expand</button>
+      <span id="graphstat"></span>
+    </div>
+    <div id="cy"></div>
+    <div id="legend"></div>
+  </section>
+  <section id="detail">
+    <div id="empty">Select a routine, table or graph node.</div>
+    <div id="card" hidden>
+      <div id="cardhead"></div>
+      <div class="tabs" id="cardtabs">
+        <button data-tab="logic" class="on">Logic ↔ source</button>
+        <button data-tab="details">Details</button>
+        <button data-tab="pack">Prompt pack</button>
+      </div>
+      <div id="tab-logic" class="tab on"><div id="outline"></div><div id="source"></div></div>
+      <div id="tab-details" class="tab"></div>
+      <div id="tab-pack" class="tab"></div>
+    </div>
+  </section>
+</main>
+
+<main id="verdict" class="view"></main>
+
+<main id="files" class="view">
+  <section id="filewrap"><div id="filecy"></div><div id="filelegend"></div></section>
+  <aside id="filepanel"></aside>
+</main>
+
+<main id="er" class="view">
+  <section id="erwrap">
+    <div id="erbar">
+      <span class="chip on" data-er="DECLARED" style="color:#7fb8ff">declared (foreign keys)</span>
+      <span class="chip on" data-er="INFERRED" style="color:#b48cff">inferred (joins)</span>
+      <span class="chip on" data-er="COLUMNS" style="color:var(--green)">show columns</span>
+      <select id="ercluster"></select>
+      <button id="ercopy" title="Copy the Mermaid source of this diagram">Copy Mermaid</button>
+      <span id="erstat"></span>
+    </div>
+    <div id="ercy"></div>
+    <div id="erlegend"></div>
+  </section>
+  <aside id="erpanel"></aside>
+</main>
+
+<div id="live-overlay" hidden>
+  <div class="livebox">
+    <div class="livehead"><span class="pulse big"></span><h2 id="livetitle">Building…</h2><span id="liveclock"></span></div>
+    <div id="livestages"></div>
+    <div class="livebar"><i id="livefill"></i></div>
+    <div id="livefiles"></div>
+    <pre id="livelog"></pre>
+    <div id="liveresult" hidden></div>
+  </div>
+</div>
+
+<main id="tables" class="view"></main>
+<main id="order" class="view"></main>
+<main id="coverage" class="view"></main>
+<main id="confidence" class="view"></main>
+
+<div id="toast"></div>
+<script src="vendor/cytoscape.min.js"></script>
+<script src="vendor/layout-base.js"></script>
+<script src="vendor/cose-base.js"></script>
+<script src="vendor/cytoscape-fcose.js"></script>
+<script src="vendor/dagre.min.js"></script>
+<script src="vendor/cytoscape-dagre.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

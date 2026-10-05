@@ -1,0 +1,10 @@
+target/
+corpus/
+.agentdocs/
+*.class
+.idea/
+*.iml
+.vscode/
+.DS_Store
+.work/
+corpus-out/
