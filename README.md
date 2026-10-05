@@ -137,9 +137,9 @@ Developer commands (`check`, `outline`, `graph`, `risks`, `build`, `explore`) ar
 
 Pushing a version tag (`git tag vX.Y.Z && git push origin vX.Y.Z`) runs [`release.yml`](.github/workflows/release.yml): it builds and tests, smoke-tests the jar exactly as described in the quickstart, and publishes the jar with a SHA-256 checksum as a GitHub release.
 
-## Roadmap
+## Feedback
 
-M1–M7 are complete; see [docs/PLAN.md](docs/PLAN.md) for the design notes and the milestone history.
+Found a bug, or a PL/SQL construct it handles badly? Please [open an issue](../../issues) and include the verdict (`analysis/verification.md`) if you can.
 
 ## License
 
