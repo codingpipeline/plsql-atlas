@@ -17,7 +17,7 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.Callable;
 
-@Command(name = "plsql-atlas", mixinStandardHelpOptions = true, version = {"plsql-atlas 0.1.0", "Created by Sandeep Ravitej"},
+@Command(name = "plsql-atlas", mixinStandardHelpOptions = true, version = {"plsql-atlas 0.1.1", "Created by Sandeep Ravitej"},
         description = "Turn a folder of Oracle PL/SQL into verified, agent-ready documentation. Created by Sandeep Ravitej.",
         subcommands = {Main.GoCmd.class, Main.BuildCmd.class, Main.ExploreCmd.class, Main.Check.class, Main.OutlineCmd.class, Main.GraphCmd.class, Main.RisksCmd.class})
 public class Main implements Runnable {
@@ -50,10 +50,10 @@ public class Main implements Runnable {
     /** Prints the verifier verdict the way every command shows it. */
     static void printVerdict(java.io.PrintStream out, dev.sandeep.plsqlparser.emit.Verifier.Report v) {
         out.println();
-        out.println("VERDICT: " + v.verdict().replace('_', ' ') + "  (parse confidence " + v.confidence() + "/100, grade " + v.grade() + ")");
-        out.println("  " + v.summary());
+        out.println(dev.sandeep.plsqlparser.run.Ascii.clean("VERDICT: " + v.verdict().replace('_', ' ') + "  (parse confidence " + v.confidence() + "/100, grade " + v.grade() + ")"));
+        out.println(dev.sandeep.plsqlparser.run.Ascii.clean("  " + v.summary()));
         for (var c : v.checks()) if (c.status().equals("FAIL") || c.status().equals("WARN"))
-            for (String d : c.details().stream().limit(5).toList()) out.println("  " + c.status() + ": " + d);
+            for (String d : c.details().stream().limit(5).toList()) out.println(dev.sandeep.plsqlparser.run.Ascii.clean("  " + c.status() + ": " + d));
     }
 
     /** Progress to the console and to the live UI at once. */
@@ -111,7 +111,7 @@ public class Main implements Runnable {
                 };
                 once.run();
                 if (watch) {
-                    System.out.println("Watching " + root + " for changes…");
+                    System.out.println("Watching " + root + " for changes...");
                     String last = dev.sandeep.plsqlparser.run.Pipeline.fingerprint(root);
                     while (true) {
                         Thread.sleep(1000);
@@ -119,7 +119,7 @@ public class Main implements Runnable {
                         if (now.equals(last)) continue;
                         Thread.sleep(1500); // let an editor finish saving
                         last = dev.sandeep.plsqlparser.run.Pipeline.fingerprint(root);
-                        System.out.println("\nChange detected, rebuilding…");
+                        System.out.println("\nChange detected, rebuilding...");
                         once.run();
                     }
                 }

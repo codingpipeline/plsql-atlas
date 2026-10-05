@@ -135,7 +135,7 @@ Developer commands (`check`, `outline`, `graph`, `risks`, `build`, `explore`) ar
 
 ## Releases
 
-Pushing a version tag (`git tag v0.1.0 && git push origin v0.1.0`) runs [`release.yml`](.github/workflows/release.yml): it builds and tests, smoke-tests the jar exactly as described in the quickstart, and publishes the jar with a SHA-256 checksum as a GitHub release.
+Pushing a version tag (`git tag vX.Y.Z && git push origin vX.Y.Z`) runs [`release.yml`](.github/workflows/release.yml): it builds and tests, smoke-tests the jar exactly as described in the quickstart, and publishes the jar with a SHA-256 checksum as a GitHub release.
 
 ## Roadmap
 

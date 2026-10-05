@@ -25,11 +25,11 @@ public interface Progress {
     /** Prints a compact live feed to a stream. */
     static Progress console(java.io.PrintStream out) {
         return new Progress() {
-            @Override public void stage(String id, String detail) { out.println("[" + id + "] " + detail); }
+            @Override public void stage(String id, String detail) { out.println(Ascii.clean("[" + id + "] " + detail)); }
             @Override public void file(String file, int done, int total, int syntaxErrors) {
-                out.printf("  parsed %d/%d %s%s%n", done, total, file, syntaxErrors > 0 ? "  (" + syntaxErrors + " syntax error(s))" : "");
+                out.println(Ascii.clean(String.format("  parsed %d/%d %s%s", done, total, file, syntaxErrors > 0 ? "  (" + syntaxErrors + " syntax error(s))" : "")));
             }
-            @Override public void log(String line) { out.println("  " + line); }
+            @Override public void log(String line) { out.println(Ascii.clean("  " + line)); }
             @Override public void finished(String verdict, String message) { }
         };
     }

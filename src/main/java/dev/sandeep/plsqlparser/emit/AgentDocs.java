@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 /** Entry point of M5: turns a {@link StructureModel} into the {@code .agentdocs/} folder. */
 public final class AgentDocs {
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "0.1.1";
 
     public record Result(Path outDir, int cards, int packages, int tables, int unaccountedLines, int sourceFiles, Verifier.Report verdict) {}
 
