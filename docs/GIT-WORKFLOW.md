@@ -59,6 +59,8 @@ Solo and in a hurry: commit on `main` and `git push` as in section 2.
 
 ## 5. Publish a release (the downloadable jar)
 
+> A fully explained, step-by-step example with checks after every step is in [RELEASE-WALKTHROUGH.md](RELEASE-WALKTHROUGH.md).
+
 The release workflow (`.github/workflows/release.yml`) runs when a tag starting with `v` is pushed. It builds, tests, smoke-tests the jar, and publishes `plsql-atlas.jar` plus a `SHA256SUMS` file on the Releases page.
 
 1. Make sure CI on `main` is green (GitHub → Actions).
